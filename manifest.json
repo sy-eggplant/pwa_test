@@ -11,6 +11,6 @@
       "sizes": "192x192",
       "type": "image/png"
     }],
-  "start_url": "https://sy-eggplant.github.io/pwa_test/index.html",
+  "start_url": "index.html",
   "display": "standalone"
 }
