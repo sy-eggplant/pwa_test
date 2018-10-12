@@ -1,3 +1,4 @@
+alert('JavaScriptのアラート');
 // service-worker.js
 var CACHE_STATIC_VERSION = 'static-v2';
 
@@ -62,3 +63,5 @@ self.addEventListener('fetch', function(event) {
     })
   );
 });
+
+alert("aaa");
