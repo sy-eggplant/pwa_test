@@ -1,6 +1,12 @@
 // service-worker.js
 var CACHE_STATIC_VERSION = 'static-v2';
 
+
+var urlsToCache = [
+  '/',
+  '/app.js'
+  ];
+
 // サービスワーカーのインストール
 self.addEventListener('install', function(event) {
   console.log('[Service Worker] Installing Service Worker...');
@@ -63,32 +69,22 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
+self.addEventListener('message', function(event) {
+return install(event);
+});
 
-var urlsToCache = [
-  '/',
-  '/app.js'
-  ];
-
-  self.addEventListener('install', function(event) {
-  return install(event);
-  });
-
-  self.addEventListener('message', function(event) {
-  return install(event);
-  });
-
-  const install = (event) => {
-  return event.waitUntil(
-      caches.open(CACHE_DYNAMIC_VERSION)
-      .then(function(cache) {
-          urlsToCache.map(url => {
-          return fetch(new Request(url)).then(response => {
-              return cache.put(url, response);
-          });
-          })
-      })
-      .catch(function(err) {
-          console.log(err);
-      })
-  );
-  }
+const install = (event) => {
+return event.waitUntil(
+    caches.open(CACHE_DYNAMIC_VERSION)
+    .then(function(cache) {
+        urlsToCache.map(url => {
+        return fetch(new Request(url)).then(response => {
+            return cache.put(url, response);
+        });
+        })
+    })
+    .catch(function(err) {
+        console.log(err);
+    })
+);
+}
