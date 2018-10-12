@@ -79,7 +79,7 @@ var urlsToCache = [
 
   const install = (event) => {
   return event.waitUntil(
-      caches.open(CACHE_NAME)
+      caches.open(CACHE_DYNAMIC_VERSION)
       .then(function(cache) {
           urlsToCache.map(url => {
           return fetch(new Request(url)).then(response => {
