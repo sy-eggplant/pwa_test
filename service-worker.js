@@ -1,4 +1,4 @@
-alert('JavaScriptのアラート');
+
 // service-worker.js
 var CACHE_STATIC_VERSION = 'static-v2';
 
@@ -64,4 +64,23 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-alert("aaa");
+
+var urlsToCache = [
+  './index.html',
+];
+
+const install = (event) => {
+  return event.waitUntil(
+    caches.open(CACHE_STATIC_VERSION)
+      .then(function(cache) {
+        urlsToCache.map(url => {
+          return fetch(new Request(url)).then(response => {
+            return cache.put(url, response);
+          });
+        })
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
+  );
+}

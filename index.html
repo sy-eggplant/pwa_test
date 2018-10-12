@@ -6,22 +6,25 @@
       var superReload = function(){
         location.reload(true);
       } 
-      setInterval(superReload, 10000);
-      // service workerが有効なら、service-worker.js を登録します
-      
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('./service-worker.js')
-    .then(registration => {
-      // 登録成功
-      registration.onupdatefound = function() {
-        console.log('アップデートがあります！');
-        registration.update();
-      }
-    })
-    .catch(err => {
-      // 登録失敗
-  });
+    //   setInterval(superReload, 10000);
+    //   // service workerが有効なら、service-worker.js を登録します
+      alert('JavaScriptのアラート');
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('./service-worker.js')
+        .then(registration => {
+        // 登録成功
+        registration.onupdatefound = function() {
+            console.log('アップデートがあります！');
+            registration.update();
+        }
+        })
+        .catch(err => {
+        // 登録失敗
+    });
+    const channel = new MessageChannel();
+navigator.serviceWorker.controller
+  .postMessage('update', [channel.port2]);
 }
     </script>
     <meta http-equiv="content-type" charset="utf-8">
