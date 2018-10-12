@@ -41,6 +41,7 @@ var CACHE_DYNAMIC_VERSION = 'dynamic-v2';
 
 self.addEventListener('fetch', function(event) {
   console.log('[Service Worker] Fetching something ...');
+  // オンラインの場合キャッシュを消す
   event.respondWith(
     // キャッシュの存在チェック
     caches.match(event.request).then(function(response) {
@@ -61,3 +62,33 @@ self.addEventListener('fetch', function(event) {
     })
   );
 });
+
+
+var urlsToCache = [
+  '/',
+  '/app.js'
+  ];
+
+  self.addEventListener('install', function(event) {
+  return install(event);
+  });
+
+  self.addEventListener('message', function(event) {
+  return install(event);
+  });
+
+  const install = (event) => {
+  return event.waitUntil(
+      caches.open(CACHE_NAME)
+      .then(function(cache) {
+          urlsToCache.map(url => {
+          return fetch(new Request(url)).then(response => {
+              return cache.put(url, response);
+          });
+          })
+      })
+      .catch(function(err) {
+          console.log(err);
+      })
+  );
+  }
